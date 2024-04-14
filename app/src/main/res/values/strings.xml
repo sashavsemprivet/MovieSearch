@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MovieSearch</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    //base layout
+    <string name="text_of_error">Error</string>
+    <string name="text_button_try_again">Try again</string>
+    <string name="movie_logo_description">logo_description</string>
+
+    //list of movie fragment
+    <string name="hint_text_of_search_edit_text">Введите название фильма</string>
+
+    //movie detail fragment
+    <string name="title_description">Описание:</string>
+    <string name="title_posters">Постеры:</string>
+
+</resources>
