@@ -1,5 +1,6 @@
 package com.example.moviesearch.data.services
 
+import com.example.moviesearch.data.models.ListReviewsResponse
 import com.example.moviesearch.data.models.MovieDetailResponse
 import com.example.moviesearch.data.models.MovieResponse
 import com.example.moviesearch.data.models.MoviesListResponse
@@ -19,4 +20,12 @@ interface AllMoviesApi {
 
     @GET("v1.4/movie/{id}")
     suspend fun getMovieInfoById(@Path("id") id: Int): Response<MovieDetailResponse>
+
+    @GET("v1.4/review")
+    suspend fun getReviewsByMovieId(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("selectFields") selectFields: String = "",
+        @Query("movieId") query: Int
+    ): Response<ListReviewsResponse>
 }

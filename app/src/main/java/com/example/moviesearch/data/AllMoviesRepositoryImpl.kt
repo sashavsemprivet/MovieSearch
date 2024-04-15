@@ -7,6 +7,7 @@ import com.example.moviesearch.data.util.doRequest
 import com.example.moviesearch.domain.AllMoviesRepository
 import com.example.moviesearch.domain.models.Movie
 import com.example.moviesearch.domain.models.MovieDetailed
+import com.example.moviesearch.domain.models.Review
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -32,6 +33,22 @@ class AllMoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovieInfoById(id: Int): Answer<MovieDetailed> {
         return withContext(Dispatchers.IO) {
             when (val response = allMoviesService.getMovieInfoById(id).doRequest()) {
+                is Answer.Error -> Answer.Error()
+                is Answer.ServerError -> Answer.ServerError(response.code, response.json)
+                is Answer.Success -> Answer.Success(response.response.map())
+            }
+        }
+    }
+
+    override suspend fun getReviewsByMovieId(
+        page: Int,
+        limit: Int,
+        selectFields: String,
+        movieId: Int
+    ): Answer<List<Review>> {
+        return withContext(Dispatchers.IO) {
+            when (val response =
+                allMoviesService.getReviewsByMovieId(page, limit, "", movieId).doRequest()) {
                 is Answer.Error -> Answer.Error()
                 is Answer.ServerError -> Answer.ServerError(response.code, response.json)
                 is Answer.Success -> Answer.Success(response.response.map())

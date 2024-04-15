@@ -47,9 +47,6 @@ class SearchMovieViewModel @Inject constructor(
                 .cachedIn(viewModelScope)
 
             newMoviesFlow.collect { pagingData ->
-                pagingData.map {
-                    println("!!!!! $it")
-                }
                 _moviesFlow.emit(pagingData)
             }
         }

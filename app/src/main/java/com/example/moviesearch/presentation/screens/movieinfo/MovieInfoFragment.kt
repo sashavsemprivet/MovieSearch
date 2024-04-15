@@ -13,8 +13,8 @@ import com.example.moviesearch.App
 import com.example.moviesearch.databinding.FragmentMovieInfoBinding
 import com.example.moviesearch.presentation.basecomponents.BaseFragment
 import com.example.moviesearch.presentation.screens.UiState
-import com.example.moviesearch.presentation.util.loadAndSetLogo
 import com.example.moviesearch.presentation.util.loadAndSetMainImage
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,6 +25,8 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
     private val viewModel: MovieInfoViewModel by viewModels {
         viewModelFactory
     }
+
+    private val reviewAdapter = ReviewAdapter()
 
     override fun onAttach(context: Context) {
         (activity?.application as App).appComponent.inject(this)
@@ -44,15 +46,18 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
         val id = arguments?.getInt("ID")
         id?.let { viewModel.getMovieInfo(it) }
 
+        initRecyclerViewReviews()
+
 
         lifecycleScope.launch {
-            viewModel.moviesInfo.collect { uiState ->
+            viewModel.moviesInfoFlow.collect { uiState ->
                 when (uiState) {
                     is UiState.Error -> showError(uiState.errorMessage)
                     is UiState.Success -> {
                         with(binding) {
                             movieName.text = uiState.data.name
-                            movieDescription.text = uiState.data.description ?: "Нет информации на данный момент"
+                            movieDescription.text =
+                                uiState.data.description ?: "Нет информации на данный момент"
                             uiState.data.mainImageUrl?.let { mainMovieImage.loadAndSetMainImage(it) }
                         }
                     }
@@ -62,6 +67,15 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
 
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun initRecyclerViewReviews() {
+        binding.rvListReviews.adapter = reviewAdapter
+        lifecycleScope.launch {
+            viewModel.reviewsFlow.collectLatest { pagingData ->
+                reviewAdapter.submitData(pagingData)
+            }
         }
     }
 

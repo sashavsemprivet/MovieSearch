@@ -84,6 +84,30 @@
             app:layout_constraintTop_toBottomOf="@+id/movie_title_description" />
 
         <TextView
+            android:id="@+id/movie_title_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/title_reviews"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_reviews"
+            tools:listitem="@layout/rv_review_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
             android:id="@+id/movie_title_posters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +116,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_description" />
+            app:layout_constraintTop_toBottomOf="@+id/rv_list_reviews" />
 
         <TextView
             android:id="@+id/movie_posters"
@@ -105,27 +129,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_title_posters" />
 
-        <TextView
-            android:id="@+id/movie_title_reviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/title_reviews"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_posters" />
 
-        <TextView
-            android:id="@+id/movie_reviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/no_info_text"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_title_reviews" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
