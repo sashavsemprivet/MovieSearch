@@ -1,5 +1,6 @@
 package com.example.moviesearch.data.services
 
+import com.example.moviesearch.data.models.MovieDetailResponse
 import com.example.moviesearch.data.models.MovieResponse
 import com.example.moviesearch.data.models.MoviesListResponse
 import retrofit2.Response
@@ -17,5 +18,5 @@ interface AllMoviesApi {
     ): Response<MoviesListResponse>
 
     @GET("v1.4/movie/{id}")
-    suspend fun getMovieInfoById(@Path("id") id: Int): Response<MovieResponse>
+    suspend fun getMovieInfoById(@Path("id") id: Int): Response<MovieDetailResponse>
 }

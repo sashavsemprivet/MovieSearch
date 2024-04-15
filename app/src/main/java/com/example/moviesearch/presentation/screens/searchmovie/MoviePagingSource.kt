@@ -3,11 +3,13 @@ package com.example.moviesearch.presentation.screens.searchmovie
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.moviesearch.data.mappers.map
+import com.example.moviesearch.data.services.AllMoviesApi
 import com.example.moviesearch.data.util.Answer
 import com.example.moviesearch.domain.AllMoviesRepository
 import com.example.moviesearch.domain.models.Movie
+import javax.inject.Inject
 
-class MoviePagingSource(
+class MoviePagingSource @Inject constructor(
     private val allMoviesRepository: AllMoviesRepository,
     private val query: String
 ) : PagingSource<Int, Movie>() {
@@ -17,10 +19,10 @@ class MoviePagingSource(
         return try {
 
             when (val response = allMoviesRepository.getAllMovies(page, params.loadSize, query)) {
-                is Answer.Error -> LoadResult.Error(Exception("SomethingWentWrong"))
-                is Answer.ServerError -> LoadResult.Error(Exception("Error ${response.code}"))
+                is Answer.Error -> LoadResult.Error(Exception("Something went wrong"))
+                is Answer.ServerError -> LoadResult.Error(Exception("Server Error ${response.code}"))
                 is Answer.Success -> {
-                    val movies = response.response.listMovieResponses.map { it.map() }
+                    val movies = response.response
                     LoadResult.Page(
                         data = movies,
                         prevKey = null,
@@ -28,8 +30,6 @@ class MoviePagingSource(
                     )
                 }
             }
-
-
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

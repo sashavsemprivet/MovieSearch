@@ -1,11 +1,15 @@
 package com.example.moviesearch.presentation.screens.searchmovie
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
+import androidx.paging.map
+import com.example.moviesearch.data.services.AllMoviesApi
+import com.example.moviesearch.data.services.RetrofitService
 import com.example.moviesearch.domain.AllMoviesRepository
 import com.example.moviesearch.domain.models.Movie
 import com.example.moviesearch.presentation.basecomponents.BaseViewModel
@@ -13,6 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchMovieViewModel @Inject constructor(
@@ -42,6 +47,9 @@ class SearchMovieViewModel @Inject constructor(
                 .cachedIn(viewModelScope)
 
             newMoviesFlow.collect { pagingData ->
+                pagingData.map {
+                    println("!!!!! $it")
+                }
                 _moviesFlow.emit(pagingData)
             }
         }
@@ -59,7 +67,7 @@ class SearchMovieViewModel @Inject constructor(
                         val matchCountry = country?.let { movie.countries.contains(it) } ?: true
                         val matchYear = year?.let { movie.year == it } ?: true
                         val matchAge = if (age != null && isOlder != null) {
-                            movie.ageRating <= age == isOlder
+                            movie.ageRating < age == isOlder
                         } else {
                             true
                         }

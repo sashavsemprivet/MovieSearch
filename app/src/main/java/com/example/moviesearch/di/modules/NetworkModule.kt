@@ -14,24 +14,8 @@ import retrofit2.Retrofit
 class NetworkModule {
 
     @Provides
-    fun provideInterceptor(): AuthInterceptor {
-        return AuthInterceptor(RetrofitService.X_API_KEY)
-    }
-
-    @Provides
-    fun provideClient(interceptor: AuthInterceptor): OkHttpClient {
-        return OkHttpClient().newBuilder()
-            .addInterceptor(interceptor)
-            .build()
-    }
-
-    @Provides
-    fun provideRetrofitService(client: OkHttpClient): AllMoviesApi {
-        return Retrofit.Builder()
-            .baseUrl(RetrofitService.BASE_URL)
-            .client(client)
-            .build()
-            .create(AllMoviesApi::class.java)
+    fun provideRetrofitService(): AllMoviesApi {
+        return RetrofitService.allMoviesApi
     }
 
     @Provides

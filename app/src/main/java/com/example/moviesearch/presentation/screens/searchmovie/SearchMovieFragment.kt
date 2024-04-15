@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@ import com.example.moviesearch.R
 import com.example.moviesearch.databinding.FragmentSearchMovieBinding
 import com.example.moviesearch.presentation.basecomponents.BaseFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +36,7 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>() {
     }
 
     override fun onAttach(context: Context) {
-        (activity?.application as? App)?.appComponent?.inject(this)
+        (activity?.application as App).appComponent.inject(this)
         super.onAttach(context)
     }
 
@@ -47,6 +49,15 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>() {
         initRecyclerView()
         initSearchView()
         initBottomSheet()
+
+        lifecycleScope.launch {
+            viewModel.error.collect {
+                if (it) {
+                    showError()
+                }
+            }
+        }
+
     }
 
     override fun getViewBinding(
@@ -102,5 +113,9 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>() {
             viewModel.filterMovies(country, year, age, isOlder)
             bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
         }
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
     }
 }

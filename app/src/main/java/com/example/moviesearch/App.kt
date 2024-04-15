@@ -7,7 +7,7 @@ import com.example.moviesearch.di.modules.NetworkModule
 
 class App : Application() {
 
-    val appComponent: ApplicationComponent? = DaggerApplicationComponent.builder()
+    val appComponent: ApplicationComponent = DaggerApplicationComponent.builder()
         .networkModule(NetworkModule())
         .build()
 }

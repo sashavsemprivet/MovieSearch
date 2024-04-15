@@ -46,13 +46,6 @@ data class MovieResponse(
     val ageRating: Int?,
 )
 
-data class LogoResponse(
-    @SerializedName("url")
-    val url: String?,
-    @SerializedName("previewUrl")
-    val previewUrl: String?
-)
-
 data class BackdropResponse(
     @SerializedName("url")
     val url: String?,

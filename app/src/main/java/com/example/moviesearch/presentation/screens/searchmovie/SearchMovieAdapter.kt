@@ -40,12 +40,10 @@ class SearchMovieAdapter(
                 movieCountry.text = movie.countries.joinToString(", ")
                 movieAgeRating.text = movie.ageRating?.toString()?.addPlusToEnd() ?: "0+"
                 movie.logoUrl?.let(movieLogo::loadAndSetLogo)
-
             }
             binding.root.setOnClickListener {
                 onOpenMovieInfo(movie.id)
             }
-
         }
     }
 
