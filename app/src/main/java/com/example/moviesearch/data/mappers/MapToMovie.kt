@@ -26,6 +26,7 @@ fun MovieDetailResponse.map(): MovieDetailed {
     return MovieDetailed(
         id = id,
         name = name,
-        description = description
+        description = description,
+        mainImageUrl = backdrop.url
     )
 }

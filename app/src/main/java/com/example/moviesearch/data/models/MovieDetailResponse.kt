@@ -9,4 +9,6 @@ data class MovieDetailResponse(
     val name: String,
     @SerializedName("description")
     val description: String,
+    @SerializedName("backdrop")
+    val backdrop: BackdropResponse
 )

@@ -15,3 +15,13 @@ fun ImageView.loadAndSetLogo(url: String) {
         .centerCrop()
         .into(this)
 }
+
+fun ImageView.loadAndSetMainImage(url: String) {
+    Glide
+        .with(this.rootView)
+        .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .placeholder(R.drawable.stub_movie_bid_logo)
+        .centerCrop()
+        .into(this)
+}

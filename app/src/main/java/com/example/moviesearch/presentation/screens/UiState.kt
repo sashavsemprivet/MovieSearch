@@ -1,6 +1,5 @@
-package com.example.moviesearch.presentation.screens.movieinfo
+package com.example.moviesearch.presentation.screens
 
-import com.example.moviesearch.domain.models.Movie
 import com.example.moviesearch.domain.models.MovieDetailed
 
 sealed class UiState<T> {

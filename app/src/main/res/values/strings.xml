@@ -13,5 +13,7 @@
     //movie detail fragment
     <string name="title_description">Описание:</string>
     <string name="title_posters">Постеры:</string>
+    <string name="title_reviews">Отзывы:</string>
+    <string name="no_info_text">На данный момент нет информации</string>
 
 </resources>

@@ -1,10 +1,10 @@
 package com.example.moviesearch.presentation.screens.movieinfo
 
-import com.example.moviesearch.data.mappers.map
 import com.example.moviesearch.data.util.Answer
 import com.example.moviesearch.domain.AllMoviesRepository
 import com.example.moviesearch.domain.models.Movie
 import com.example.moviesearch.presentation.basecomponents.BaseViewModel
+import com.example.moviesearch.presentation.screens.UiState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
