@@ -22,37 +22,27 @@ class AllMoviesRepositoryImpl @Inject constructor(
         query: String
     ): Answer<List<Movie>> {
         return withContext(Dispatchers.IO) {
-            when (val response = allMoviesService.getAllMovies(page, limit, query).doRequest()) {
-                is Answer.Error -> Answer.Error()
-                is Answer.ServerError -> Answer.ServerError(response.code, response.json)
-                is Answer.Success -> Answer.Success(response.response.map())
-            }
+            allMoviesService.getAllMovies(page, limit, query)
+                .doRequest { map() }
         }
     }
 
     override suspend fun getMovieInfoById(id: Int): Answer<MovieDetailed> {
         return withContext(Dispatchers.IO) {
-            when (val response = allMoviesService.getMovieInfoById(id).doRequest()) {
-                is Answer.Error -> Answer.Error()
-                is Answer.ServerError -> Answer.ServerError(response.code, response.json)
-                is Answer.Success -> Answer.Success(response.response.map())
-            }
+            allMoviesService.getMovieInfoById(id)
+                .doRequest { map() }
         }
     }
+
 
     override suspend fun getReviewsByMovieId(
         page: Int,
         limit: Int,
-        selectFields: String,
         movieId: Int
     ): Answer<List<Review>> {
         return withContext(Dispatchers.IO) {
-            when (val response =
-                allMoviesService.getReviewsByMovieId(page, limit, "", movieId).doRequest()) {
-                is Answer.Error -> Answer.Error()
-                is Answer.ServerError -> Answer.ServerError(response.code, response.json)
-                is Answer.Success -> Answer.Success(response.response.map())
-            }
+            allMoviesService.getReviewsByMovieId(page, limit, movieId)
+                .doRequest { map() }
         }
     }
 }

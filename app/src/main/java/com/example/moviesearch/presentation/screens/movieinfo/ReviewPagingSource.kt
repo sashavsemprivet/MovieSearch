@@ -16,7 +16,7 @@ class ReviewPagingSource(
         return try {
 
             when (val response =
-                allMoviesRepository.getReviewsByMovieId(page, 5, "", movieId)) {
+                allMoviesRepository.getReviewsByMovieId(page, 5, movieId)) {
                 is Answer.Error -> LoadResult.Error(Exception("Something went wrong"))
                 is Answer.ServerError -> LoadResult.Error(Exception("Server Error ${response.code}"))
                 is Answer.Success -> {

@@ -2,7 +2,6 @@ package com.example.moviesearch.data.services
 
 import com.example.moviesearch.data.models.ListReviewsResponse
 import com.example.moviesearch.data.models.MovieDetailResponse
-import com.example.moviesearch.data.models.MovieResponse
 import com.example.moviesearch.data.models.MoviesListResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -25,7 +24,6 @@ interface AllMoviesApi {
     suspend fun getReviewsByMovieId(
         @Query("page") page: Int,
         @Query("limit") limit: Int,
-        @Query("selectFields") selectFields: String = "",
         @Query("movieId") query: Int
     ): Response<ListReviewsResponse>
 }
